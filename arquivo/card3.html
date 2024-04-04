@@ -1,0 +1,157 @@
+<card3>       
+
+    <!--Titulo-->
+        <h1 class="display-4 text-center mt-4 titulo" >Tarefas Esporádicas</h1>
+    <!--Linha para isto tudo-->
+        <div class="row">
+    <!--centra e ocupa 9 "colunas"-->
+            <div class="col-md-12 mx-auto my-auto">
+    <!--CARD-->
+                <div class="card">
+    <!--CARD HEADER-->
+                    <div class="card-header">
+    <!--Criação da Tarefa-->
+                        <form action="/criar-tarefa-esporadica" method="post">
+    <!--Escrever tarefa-->
+                            <div class="form-group"> <!-- Separamos o input do botão colocando o input neste form-group para que os elementos não estejam colados e haja separação entre eles -->
+                                <input type="text" name="conteudo_tarefa" placeholder="Tarefa" class="form-control" autofocus>
+                            </div>
+    <!--Escrever tarefa-->
+                            <div class="form-group">
+                                <select name="intervalo_repeticao_mode" class="form-control">
+                                    <option value="">Sem repetição</option>
+                                    <option value="days">Dias</option>
+                                    <option value="weeks">Weeks</option>
+                                    <option value="months">Meses</option>
+                                    <option value="years">Anos</option>
+                                    <option value="specific_day_of_month">Dia específico do mês</option>
+                                    <option value="specific_day_of_year">Dia específico do ano</option>
+                                    <option value="Monday">Todas as segundas</option>
+                                    <option value="Tuesday">Todas as terças</option>
+                                    <option value="Wednesday">Todas as quartas</option>
+                                    <option value="Thursday">Todas as quintas</option>
+                                    <option value="Friday">Todas as sextas</option>
+                                    <option value="Saturday">Todos os sábados</option>
+                                    <option value="Sunday">Todos os domingos</option>
+                                </select>
+    <!--Escrever o intervalo de repetição-->
+                            </div>
+                                <input type="text" name="intervalo_repeticao_value" id="intervalo_repeticao_value" placeholder="Interval value" class="form-control">
+    <!--Clicar na Checkbox se for para escolher o domingo seguinte mais proximo-->
+                            <div class="form-check">
+                                <input type="checkbox" name="intervalo_repeticao_next_sunday" class="form-check-input ml-2">
+                                <label class="">Find next Sunday after calculated date</label>
+                            </div>
+    <!--Botão Guardar-->
+                            <button type="submit" class="btn btn-primary btn-block"> <!-- btn-block faz com que o botão ocupe toda a largura -->
+                                Guardar
+                            </button>
+                        </form>
+    <!--Tarefa Criada-->
+                    </div>
+    <!--CARD HEADER Terminado-->
+
+    <!--CARD BODY-->
+                    <div class="card-body">
+    <!--Linha antes da lista para o delite-->
+                        <div class="row mb-3 justify-content-between">
+    <!-- Texto titulo -->
+                            <div class="col" id="card3">
+                            Esporadicos
+                            </div>
+    <!--Icon delite-->
+                            <div class="col text-right">
+                                <a href="#" id="delete-button-card3">
+                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+    <!-- Linha delite terminada -->
+
+    <!-- Cabeçalho Tabela -->
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col"></th>
+                              <th scope="col"></th>
+                              <th scope="col">Task</th>
+                              <th scope="col">Done</th>
+                              <th scope="col">Next</th>
+                              <th scope="col">Updated</th>
+                              <th scope="col">Interval</th>
+                              <th scope="col">Mode</th>
+                              <th scope="col">Created</th>
+                              <th scope="col">Next Sunday</th>
+                            </tr>
+                          </thead>
+    <!-- fim Cabeçalho -->
+
+    <!-- Tabela body -->
+                          <tbody>
+    <!-- for para cada linha da tabela da bd -->
+                            {% for tarefa in lista_de_tarefas_esporadicas %}
+    <!-- inicio linha -->
+                            <tr>
+    <!-- checkbox delite - para cada linha -->
+                              <td><input type="checkbox" class="form-check-input ml-2" value="{{ tarefa.id }}"></td>
+    <!-- icon feita - para cada linha -->
+                                <td>
+                                  <a href="/tarefa-feita-esporadica/{{ tarefa.id }}">
+                                    {% if tarefa.feita %}
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                      </svg>
+                                    {% else %}
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle" viewBox="0 0 16 16">
+                                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                      </svg>
+                                    {% endif %}
+                                  </a>
+                              </td>
+    <!-- texto descrição tarefa -->
+                              <td>{{tarefa.conteudo}}</td>
+    <!-- true feita -->
+                              <td>{{tarefa.feita}}</td>
+    <!-- proxima data - if hoje ou passado: vermelho, se não: preto, se não tem proxima data: nada -->
+                                {% if tarefa.data_proxima %}
+                                    {% if tarefa.data_proxima.date() <= datetime.utcnow().date() %}
+                                <td class="text-danger">{{ tarefa.data_proxima.strftime('%Y-%m-%d') }}</td>
+                                    {% else %}
+                                <td>{{ tarefa.data_proxima.strftime('%Y-%m-%d') }}</td>
+                                    {% endif %}
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+    <!-- data alteração feito e não feito - se existe: escreve, se não existe: não escreve-->
+                              {% if tarefa.data_alteracao %}
+                              <td>{{ tarefa.data_alteracao.strftime('%Y-%m-%d') }}</td>
+                              {% else %}
+                              <td></td>
+                              {% endif %}
+    <!-- intervalo repetição -->
+                                <td>{{ tarefa.intervalo_repeticao_value }}</td>
+    <!-- modo -->
+                                <td>{{ tarefa.intervalo_repeticao_mode }}</td>
+    <!-- data criação -->
+                                <td>{{ tarefa.data_criacao.strftime('%Y-%m-%d') }}</td>
+    <!-- true domingo -->
+                                <td>{{ tarefa.proximo_domingo }}</td>
+                            </tr>
+    <!-- fim linha -->
+                            {% endfor %}
+    <!-- fim for para cada linha da tabela da bd -->
+                          </tbody>
+    <!-- fim Tabela body -->
+                        </table>
+    <!-- fim Tabela -->
+                    </div>
+    <!-- fim CARD BODY-->
+                </div>
+    <!-- fim div ocupa 9 colunas e centra-->
+            </div>
+    <!-- fim linha reservada para isto tudo -->
+        </div>
+</card3> 
